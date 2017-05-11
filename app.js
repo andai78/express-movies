@@ -46,6 +46,10 @@ app.get('/movies/add', (req, res) =>{
     res.send("Form");
 });
 
+app.get('/search', (req, res) =>{
+    res.render("search");
+});
+
 
 app.listen(port, () => {
     console.log(`server listen on port : ${port}`);
