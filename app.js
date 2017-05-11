@@ -1,15 +1,18 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 const port = 3000;
 
 // MIDDLEWARE
 app.use('/public', express.static('public'));
+app.use(bodyParser.urlencoded({extended: false}));
 
 // VIEWS
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
+let americanMovie = [];
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -17,9 +20,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/movies', (req, res) =>{
-    res.render("movies");
+     americanMovie = [
+        {title: "Amercian Gangsta", year: 2004},
+        {title: "Malcom x", year: 1996}
+    ];
+    res.render("movies", {movies: americanMovie});
 });
 
+app.post('/movies', (req,res) =>{
+    //console.log(req.body.title);
+    const newMovie = {title: req.body.title, year: req.body.year};
+    americanMovie.push(newMovie);
+    console.log(americanMovie);
+    res.send(201);
+});
 
 app.get('/movie/:title/:id', (req, res) =>{
     // recuperation du parametre ds l'url

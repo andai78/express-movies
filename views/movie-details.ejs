@@ -6,7 +6,16 @@
         <link rel="stylesheet" href="../public/style.css" />
     </head>
     <body>
-        <h3>Details of <%= movieTitle %></h3>
-        <p>Movie n°  <%= movieId %></p>
+        <div class="central">
+            <!-- Inclusion du header -->
+            <% include ./partials/header %>
+
+            <h3>Details of <%= movieTitle %></h3>
+            <p>Movie n°  <%= movieId %></p>
+
+        </div>
+
+        <!-- Inclusion du footer -->
+        <% include ./partials/footer %>
     </body>
 </html>

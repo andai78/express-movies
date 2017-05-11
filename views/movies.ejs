@@ -6,7 +6,26 @@
         <link rel="stylesheet" href="../public/style.css" />
     </head>
     <body>
+        <!-- Inclusion du header -->
+        <% include ./partials/header %>
+
         <h1>All movies</h1>
-        
+        <div>
+            <% for(m of movies) {%>
+                <div> <%= m.title %> <%= m.year %></div>
+            <% } %>
+        </div>
+        <br />
+        <div>
+            <form action="/movies" method="post">
+                <label for="title">Title :</label>
+                <input type="text" name="title">
+                <label for="year">Year :</label>
+                <input type="text" name="year">
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    <!-- Inclusion du footer -->
+        <% include ./partials/footer %>
     </body>
 </html>
