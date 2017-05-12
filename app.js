@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
+const jwt = require('jsonwebtoken');
 const port = 3000;
 
 // MIDDLEWARE
@@ -55,6 +55,7 @@ app.get('/login', (req, res) =>{
 });
 
 const fakeUser = {email: 'test@hot.fr', password: '0000'};
+const secret = 'qsdjS12ozehdoIJ123DJOZJLDSCqsdeffdg123ER56SDFZedhWXojqshduzaohduihqsDAqsdq';
 
 app.post('/login', (req, res) =>{
     console.log(req.body);
@@ -63,11 +64,13 @@ app.post('/login', (req, res) =>{
     }
     else{
         if(fakeUser.email === req.body.email && fakeUser.password === req.body.password){
-            res.json({
+            const myToken = jwt.sign({iss: 'http://expressmovies.fr', user: 'Alex', role: 'moderator'}, secret);
+            res.json(myToken);
+            /*res.json({
                 email: 'test@hot.fr',
                 favorite: 'Malcom X',
                 lastLogin: new Date()
-            })
+            })*/
         }
         else{
             res.send(401);
