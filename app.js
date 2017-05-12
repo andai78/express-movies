@@ -50,6 +50,31 @@ app.get('/search', (req, res) =>{
     res.render("search");
 });
 
+app.get('/login', (req, res) =>{
+    res.render("login", {title: 'Connexion'});
+});
+
+const fakeUser = {email: 'test@hot.fr', password: '0000'};
+
+app.post('/login', (req, res) =>{
+    console.log(req.body);
+    if(!req.body){
+        res.sendStatus(500);
+    }
+    else{
+        if(fakeUser.email === req.body.email && fakeUser.password === req.body.password){
+            res.json({
+                email: 'test@hot.fr',
+                favorite: 'Malcom X',
+                lastLogin: new Date()
+            })
+        }
+        else{
+            res.send(401);
+        }
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`server listen on port : ${port}`);

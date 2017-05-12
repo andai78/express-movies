@@ -6,17 +6,45 @@
         <link rel="stylesheet" href="../public/style.css" />
     </head>
     <body>
+        <!-- Inclusion du header -->
+        <% include ./partials/header %>
 
-        <div class="central">
-            <!-- Inclusion du header -->
-            <% include ./partials/header %>
-                <form action="/search" method="post">
-                <label for="search">Search :</label>
-                <input type="text" name="search">
-        </form>
+        <h1>Votre recherche</h1>
+        <div>
+                <input type="text" name="search" id="search">
+                <button id="btnSearch">Search</button>
         </div>
+        <div id="result">
 
+        </div>
         <!-- Inclusion du footer -->
         <% include ./partials/footer %>
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            const API_KEY = "db4c2fd6e08b2ee8f12ad65338c61733";
+            const searchTerm = document.getElementById('search');
+            const btnSearch = document.getElementById('btnSearch');
+
+            btnSearch.addEventListener('click',search);
+            let resultDiv = document.getElementById('result');
+
+            function search(){
+                const query = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchTerm.value}`;
+                axios.get(query)
+                    .then(function(resp){
+                        console.log(resp);
+                        displayResults(resp.data.results);
+                });
+            }
+            function displayResults(results){
+                resultDiv.innerHTML = '';
+                for(let r of results){
+                    let movieDiv = document.createElement('div');
+                    movieDiv.innerHTML = r.title;
+                    resultDiv.appendChild(movieDiv);
+                }
+            }
+        </script>
     </body>
 </html>
